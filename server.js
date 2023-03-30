@@ -77,12 +77,16 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/profile", (req, res) => {
+app.get("/profile", async (req, res) => {
   const {token} = req.cookies;
-  jwt.verify(token, secret, {}, (err,info)=>{
-    if(err) throw err;
-    res.json(info);
-  });
+  try {
+      jwt.verify(token, secret, {}, (err,info)=>{
+      if(err) throw err;
+      res.json(info);
+    });
+  } catch (e) {
+    res.status(500).json(e);
+  }
 });
 
 app.post("/logout", (req,res) => {
