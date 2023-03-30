@@ -70,6 +70,7 @@ app.post("/login", async (req, res) => {
   if (passOk) {
     await jwt.sign({name, email, id:userDoc._id}, secret, {}, (err, token) => {
       if (err) throw err;
+      console.log(token);
       res.cookie('token', token).json('ok');
     })
   } else {
@@ -79,6 +80,7 @@ app.post("/login", async (req, res) => {
 
 app.get("/profile", async (req, res) => {
   const {token} = req.cookies;
+  console.log(token);
   try {
       await jwt.verify(token, secret, {}, (err,info)=>{
       if(err) throw err;
