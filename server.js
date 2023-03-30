@@ -78,11 +78,11 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/profile", async (req, res) => {
+app.get("/profile", (req, res) => {
   const {token} = req.cookies;
   console.log(token);
   try {
-      await jwt.verify(token, secret, {}, (err,info)=>{
+      jwt.verify(token, secret, {}, (err,info)=>{
       if(err) throw err;
       res.json(info);
     });
