@@ -66,7 +66,7 @@ app.post("/login", async (req, res) => {
   const {email, password} = req.body;
   const userDoc = await User.findOne({email});
   const name = userDoc.name;
-  const passOk = userDoc.password);
+  const passOk = userDoc.password;
   if (passOk) {
     jwt.sign({name, email, id:userDoc._id}, secret, {}, (err, token) => {
       if (err) throw err;
