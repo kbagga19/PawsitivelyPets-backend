@@ -74,7 +74,8 @@ app.post("/login", async (req, res) => {
       jwt.sign({name, email, id:userDoc._id}, secret, {}, (err, token) => {
       if (err) throw err;
       console.log(token);
-      res.cookie('token', token).json({
+      res.cookie('token', token, {sameSite: 'none',
+    secure: true}).json({
         name,
         email, 
         id:userDoc._id,
