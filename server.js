@@ -15,7 +15,7 @@ const fs = require('fs');
 const uploadMiddleware = multer({dest: 'uploads/'});
 
 app.use(express.static("public"));
-app.use(cors({credentials: true, origin: ["http://localhost:3000", "https://pawsitivelypets.onrender.com"], exposedHeaders: ["set-cookie"]}));
+app.use(cors({credentials: true, origin: ["http://localhost:3000", "https://pawsitivelypets.onrender.com"], exposedHeaders: ["set-cookie", "cookie", "Set-Cookie, Cookie"]}));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
@@ -74,7 +74,7 @@ app.post("/login", async (req, res) => {
       jwt.sign({name, email, id:userDoc._id}, secret, {}, (err, token) => {
       if (err) throw err;
       console.log(token);
-     res.cookie('token', token, {sameSite: 'none', httpOnly: true, secure: true}).json({
+      res.cookie('token', token, {sameSite: 'none', httpOnly: true, secure: true}).json({
         name,
         email, 
         id:userDoc._id,
