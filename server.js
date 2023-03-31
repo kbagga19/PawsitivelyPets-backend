@@ -15,7 +15,7 @@ const fs = require('fs');
 const uploadMiddleware = multer({dest: 'uploads/'});
 
 app.use(express.static("public"));
-app.use(cors({credentials: true, origin: ["http://localhost:3000", "https://pawsitivelypets.onrender.com"], exposedHeaders: ["Set-Cookie"]}));
+app.use(cors({credentials: true, origin: ["http://localhost:3000", "https://pawsitivelypets.onrender.com"], exposedHeaders: ["set-cookie"]}));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
