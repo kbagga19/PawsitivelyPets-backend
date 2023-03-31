@@ -74,7 +74,11 @@ app.post("/login", async (req, res) => {
       jwt.sign({name, email, id:userDoc._id}, secret, {}, (err, token) => {
       if (err) throw err;
       console.log(token);
-      res.cookie('token', token).json('ok');
+      res.cookie('token', token).json({
+        name,
+        email, 
+        id:userDoc._id,
+      });
     })
   } else {
     res.status(400).json("Wrong Credentials!");
@@ -84,18 +88,14 @@ app.post("/login", async (req, res) => {
 app.get("/profile", (req, res) => {
   const {token} = req.cookies;
   console.log(token);
-  try {
-      jwt.verify(token, secret, {}, (err,info)=>{
-      if(err) throw err;
-      res.json(info);
+  jwt.verify(token, secret, {}, (err,info)=>{
+    if(err) throw err;
+    res.json(info);
     });
-  } catch (e) {
-    res.status(500).json(e);
-  }
 });
 
 app.post("/logout", (req,res) => {
-  res.cookie('token').json('ok')
+  res.cookie('token', '').json('ok')
 });
 
 app.get("/food", async (req,res) => {
