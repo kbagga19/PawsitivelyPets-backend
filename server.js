@@ -95,7 +95,8 @@ app.get("/profile", (req, res) => {
 });
 
 app.post("/logout", (req,res) => {
-  res.cookie('token', '').json('ok')
+  res.cookie('token', '').json('ok');
+  return false;
 });
 
 app.get("/food", async (req,res) => {
