@@ -74,7 +74,7 @@ app.post("/login", async (req, res) => {
       jwt.sign({name, email, id:userDoc._id}, secret, {}, (err, token) => {
       if (err) throw err;
       console.log(token);
-      res.cookie('token', token, {sameSite: 'none'}).json({
+      res.cookie('token', token, {sameSite: false}).json({
         name,
         email, 
         id:userDoc._id,
@@ -95,7 +95,7 @@ app.get("/profile", (req, res) => {
 });
 
 app.post("/logout", (req,res) => {
-  res.cookie('token', '', {sameSite: 'none'}).json('ok');
+  res.cookie('token', '', {sameSite: false}).json('ok');
   return false;
 });
 
