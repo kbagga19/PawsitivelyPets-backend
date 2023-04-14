@@ -11,6 +11,7 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const fs = require('fs');
+var store = require('store');
 
 const uploadMiddleware = multer({dest: 'uploads/'});
 
@@ -74,7 +75,8 @@ app.post("/login", async (req, res) => {
       jwt.sign({name, email, id:userDoc._id}, secret, {}, (err, token) => {
       if (err) throw err;
       console.log(token);
-      res.cookie('token', token, {sameSite: false}).json({
+      store.set('token', token);
+      res.json({
         name,
         email, 
         id:userDoc._id,
@@ -86,7 +88,7 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/profile", (req, res) => {
-  const {token} = req.cookies;
+  const token = store.get('token');
   console.log(token);
   jwt.verify(token, secret, {}, (err,info)=>{
     if(err) throw err;
@@ -95,7 +97,7 @@ app.get("/profile", (req, res) => {
 });
 
 app.post("/logout", (req,res) => {
-  res.cookie('token', '', {sameSite: false}).json('ok');
+  store.remove('token');
   return false;
 });
 
