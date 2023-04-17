@@ -87,7 +87,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/profile", (req, res) => {
+app.get("/profile/:id", (req, res) => {
   const token = store.get('token');
   console.log(token);
   jwt.verify(token, secret, {}, (err,info)=>{
