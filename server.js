@@ -72,7 +72,7 @@ app.post("/login", async (req, res) => {
     console.log(name);
     console.log(passOk);
   if (passOk) {
-      jwt.sign({name, email, id:userDoc._id}, secret, {}, (err, token) => {
+      jwt.sign({name, email, id:userDoc._id}, secret, {expiresIn: 10}, (err, token) => {
       if (err) throw err;
       console.log(token);
       store.set('token', token);
