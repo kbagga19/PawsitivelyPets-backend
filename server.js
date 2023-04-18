@@ -68,37 +68,28 @@ app.post("/login", async (req, res) => {
   const userDoc = await User.findOne({email});
   const name = userDoc.name;
   const passOk = bcrypt.compareSync(password, userDoc.password);
-  console.log(email);
-    console.log(name);
-    console.log(passOk);
   if (passOk) {
-      jwt.sign({name, email, id:userDoc._id}, secret, {expiresIn: 10}, (err, token) => {
+    const token = jwt.sign({name, email, id:userDoc._id}, secret, (err, token) => {
       if (err) throw err;
-      console.log(token);
-      store.set('token', token);
-      res.json({
-        name,
-        email, 
-        id:userDoc._id,
-      });
+      res.json({status: "ok", data: token});
     })
   } else {
     res.status(400).json("Wrong Credentials!");
   }
 });
 
-app.get("/profile/:id", (req, res) => {
-  const token = store.get('token');
-  console.log(token);
-  jwt.verify(token, secret, {}, (err,info)=>{
-    if(err) throw err;
-    res.json(info);
-    });
-});
-
-app.post("/logout", (req,res) => {
-  store.remove('token');
-  return false;
+app.post("/profile", async (req, res) => {
+  const { token } = req.body;
+  try {
+    const user = jwt.verify(token, secret);
+    const useremail = user.email;
+    User.findOne({email: useremail})
+    .then((data) => {
+      res.send({status: "ok", data: data});
+    })
+    .catch((error) => {res.send({status: "error", data: error});
+  });
+} catch (error) {}
 });
 
 app.get("/food", async (req,res) => {
