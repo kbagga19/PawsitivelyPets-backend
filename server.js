@@ -16,7 +16,7 @@ var store = require('store');
 const uploadMiddleware = multer({dest: 'uploads/'});
 
 app.use(express.static("public"));
-app.use(cors({credentials: true, origin: ["http://localhost:3000", "https://pawsitivelypets.onrender.com", "https://pawsitively-pets-frontend.vercel.app"], exposedHeaders: ["set-cookie", "cookie", "Set-Cookie, Cookie"]}));
+app.use(cors({credentials: true, origin: ["https://www.pawsitively-pets.co", "http://localhost:3000", "https://pawsitivelypets.onrender.com", "https://pawsitively-pets-frontend.vercel.app"], exposedHeaders: ["set-cookie", "cookie", "Set-Cookie, Cookie"]}));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
