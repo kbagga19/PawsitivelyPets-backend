@@ -6,11 +6,15 @@ const PetSchema = new Schema({
     type: String,
     breed: String,
     gender: String,
-    vaccination: String,
+    isVaccinated: String,
+    isRescued: String,
     age: String, 
-    content: String,
-    cover: String,
-    owner: {type:Schema.Types.ObjectId, ref:'User'},
+    aboutPet: String,
+    reasonForAdoption: String,
+    img: String,
+    location: String,
+    contactName: String,
+    email: String,
 });
 
 const PetModel = model('Pet', PetSchema);

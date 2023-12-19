@@ -179,12 +179,16 @@ app.post('/addPet', uploadMiddleware.single('file'), async (req, res) => {
       name,
       type,
       breed,
+      isRescued,
       gender,
-      vaccination,
+      isVaccinated,
       age,
-      content,
-      cover: newPath,
-      owner: info.id,
+      aboutPet,
+      reasonForAdoption,
+      img: newPath,
+      contactName,
+      email,
+      location,
     });
     res.json(petDoc);
   });
