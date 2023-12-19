@@ -174,7 +174,7 @@ app.post('/addPet', uploadMiddleware.single('file'), async (req, res) => {
   const token = req.headers['token'];
   jwt.verify(token, secret, {}, async(err,info)=>{
     if(err) throw err;
-    const {name, type, breed, gender, vaccination, age, content} = req.body;
+    const {name, type, breed, gender, isVaccinated, email, location, contactName, isRescued, aboutPet, age, reasonForAdoption} = req.body;
     const petDoc = await Pet.create({
       name,
       type,
