@@ -186,8 +186,7 @@ app.post('/addPet', uploadMiddleware.single('file'), async (req, res) => {
       aboutPet,
       reasonForAdoption,
       img: newPath,
-      contactName,
-      email,
+      author: info.id,
       location,
     });
     res.json(petDoc);

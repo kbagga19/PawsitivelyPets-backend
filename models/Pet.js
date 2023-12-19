@@ -13,8 +13,7 @@ const PetSchema = new Schema({
     reasonForAdoption: String,
     img: String,
     location: String,
-    contactName: String,
-    email: String,
+    author: {type:Schema.Types.ObjectId, ref:'User'}
 });
 
 const PetModel = model('Pet', PetSchema);
