@@ -192,3 +192,31 @@ app.get('/post/:id', async(req,res) => {
 
 app.listen(3001, () => console.log("Node server listening on port 3001!"));
 
+// app.post('/addPet', uploadMiddleware.single('file'), async (req, res) => {
+//   const {originalname, path} = req.file;
+//   const parts = originalname.split('.');
+//   const ext = parts[parts.length - 1];
+//   const newPath = path + '.' + ext;
+//   fs.renameSync(path, newPath);
+
+//   const token = req.headers['token'];
+//   jwt.verify(token, secret, {}, async(err,info)=>{
+//     if(err) throw err;
+//     const {name, type, breed, gender, vaccination, age, content} = req.body;
+//     const petDoc = await Pet.create({
+//       name,
+//       type,
+//       breed,
+//       gender,
+//       vaccination,
+//       age,
+//       content,
+//       cover: newPath,
+//       owner: info.id,
+//     });
+//     res.json(petDoc);
+//   });
+// })
+
+// app.listen(3001, () => console.log("Node server listening on port 3001!"));
+
