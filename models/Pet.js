@@ -3,9 +3,12 @@ const {Schema, model} = mongoose;
 
 const PetSchema = new Schema({
     name: String,
+    type: String,
+    breed: String,
     gender: String,
-    content: String,
+    vaccination: String,
     age: String, 
+    content: String,
     cover: String,
     owner: {type:Schema.Types.ObjectId, ref:'User'},
 });
