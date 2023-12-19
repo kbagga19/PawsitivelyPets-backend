@@ -186,7 +186,8 @@ app.post('/addPet', uploadMiddleware.single('file'), async (req, res) => {
       aboutPet,
       reasonForAdoption,
       img: newPath,
-      author: info.id,
+      email,
+      contactName,
       location,
     });
     res.json(petDoc);
@@ -195,7 +196,7 @@ app.post('/addPet', uploadMiddleware.single('file'), async (req, res) => {
 
 app.get('/pets/:id', async (req, res) => {
   const {id} = req.params;
-  const petDoc = await Pet.findById(id).populate('author', ['name']);
+  const petDoc = await Pet.findById(id);
   res.json(petDoc);
 })
 
