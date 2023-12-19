@@ -165,10 +165,12 @@ app.get('/post/:id', async(req,res) => {
 })
 
 app.post('/addPet', async (req, res) => {
-  const data = req.body;
+  const {name, gender, age} = req.body;
   try {
     const petDoc = await Pet.create({
-      data
+      name,
+      gender,
+      age
     });
     res.json(petDoc);
   } catch(e) {
