@@ -5,6 +5,7 @@ const stripe = require("stripe")('sk_test_51MUCJqSJ5OsYGHjp2fAng56vaIW9yN1aPTS2K
 const mongoose = require('mongoose');
 const User = require('./models/User');
 const Post = require('./models/Post');
+const Pet = require('./models/Pet');
 const Products = require('./models/Prod');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -126,8 +127,7 @@ app.post("/post", uploadMiddleware.single('file'), async (req, res) => {
   const newPath = path + '.' + ext;
   fs.renameSync(path, newPath);
 
-  //const {token} = req.cookies;
-const token = req.headers['token'];
+  const token = req.headers['token'];
   jwt.verify(token, secret, {}, async(err,info)=>{
     if(err) throw err;
     const {title, summary, content} = req.body;
@@ -140,18 +140,6 @@ const token = req.headers['token'];
   })
     res.json(postDoc);
   });
-//   try{
-//     const userinfo = jwt.verify(token, secret);
-//     const {title, summary, content} = req.body;
-//     const postDoc = await Post.create({
-//     title,
-//     summary,
-//     content,
-//     cover: newPath,
-//     author: userinfo.id,
-//   })
-//   res.json(postDoc);
-//   }catch(error) {}
 });
 
 app.get('/post', async(req, res) => {
@@ -175,5 +163,18 @@ app.get('/post/:id', async(req,res) => {
   const postDoc = await Post.findById(id).populate('author', ['name']);
   res.json(postDoc);
 })
+
+app.post('/addPet', async (req, res) => {
+  const data = req.body;
+  try {
+    const petDoc = await Pet.create({
+      data
+    });
+    res.json(petDoc);
+  } catch(e) {
+    res.status(400).json(e);
+  }
+})
+
 app.listen(3001, () => console.log("Node server listening on port 3001!"));
 
