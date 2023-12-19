@@ -193,6 +193,12 @@ app.post('/addPet', uploadMiddleware.single('file'), async (req, res) => {
   });
 })
 
+app.get('/pets/:id', async (req, res) => {
+  const {id} = req.params;
+  const petDoc = await Pet.findById(id).populate('author', ['name']);
+  res.json(petDoc);
+})
+
 app.listen(3001, () => console.log("Node server listening on port 3001!"));
 
 // app.post('/addPet', uploadMiddleware.single('file'), async (req, res) => {
