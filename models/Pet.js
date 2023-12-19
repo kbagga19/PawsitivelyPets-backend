@@ -15,6 +15,8 @@ const PetSchema = new Schema({
     location: String,
     email: String,
     contactName: String
+},{
+    timestamps: true,
 });
 
 const PetModel = model('Pet', PetSchema);
