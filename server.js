@@ -198,6 +198,12 @@ app.post('/addPet', uploadMiddleware.single('file'), async (req, res) => {
   });
 })
 
+app.get('/pets', async (req, res) => {
+  res.json(await Pet.find()
+    .sort({createdAt: -1})
+  );
+})
+
 app.get('/pets/:id', async (req, res) => {
   const {id} = req.params;
   const petDoc = await Pet.findById(id);
