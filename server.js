@@ -127,12 +127,6 @@ app.get("/accessories", async (req,res) => {
 });
 
 app.post("/post", upload.single('file'), async (req, res) => {
-  // const {originalname, path} = req.file;
-  // const parts = originalname.split('.');
-  // const ext = parts[parts.length - 1];
-  // const newPath = path + '.' + ext;
-  // fs.renameSync(path, newPath);
-
   const token = req.headers['token'];
   jwt.verify(token, secret, {}, async(err,info)=>{
     if(err) throw err;
@@ -171,12 +165,6 @@ app.get('/post/:id', async(req,res) => {
 })
 
 app.post('/addPet', upload.single('file'), async (req, res) => {
-  // const {originalname, path} = req.file;
-  // const parts = originalname.split('.');
-  // const ext = parts[parts.length - 1];
-  // const newPath = path + '.' + ext;
-  // fs.renameSync(path, newPath);
-
   const token = req.headers['token'];
   jwt.verify(token, secret, {}, async(err,info)=>{
     if(err) throw err;
