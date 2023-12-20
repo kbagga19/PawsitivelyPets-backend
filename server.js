@@ -14,7 +14,9 @@ const multer = require('multer');
 const fs = require('fs');
 var store = require('store');
 
-const uploadMiddleware = multer({dest: 'uploads/'});
+// const uploadMiddleware = multer({dest: 'uploads/'});
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 app.use(express.static("public"));
 app.use(cors({credentials: true, origin: ["https://www.pawsitively-pets.co", "http://localhost:3000", "https://pawsitivelypets.onrender.com", "https://pawsitively-pets-frontend.vercel.app"], exposedHeaders: ["set-cookie", "cookie", "Set-Cookie, Cookie"]}));
@@ -124,12 +126,12 @@ app.get("/accessories", async (req,res) => {
 }
 });
 
-app.post("/post", uploadMiddleware.single('file'), async (req, res) => {
-  const {originalname, path} = req.file;
-  const parts = originalname.split('.');
-  const ext = parts[parts.length - 1];
-  const newPath = path + '.' + ext;
-  fs.renameSync(path, newPath);
+app.post("/post", upload.single('file'), async (req, res) => {
+  // const {originalname, path} = req.file;
+  // const parts = originalname.split('.');
+  // const ext = parts[parts.length - 1];
+  // const newPath = path + '.' + ext;
+  // fs.renameSync(path, newPath);
 
   const token = req.headers['token'];
   jwt.verify(token, secret, {}, async(err,info)=>{
@@ -139,7 +141,7 @@ app.post("/post", uploadMiddleware.single('file'), async (req, res) => {
     title,
     summary,
     content,
-    cover: newPath,
+    cover: req.file.buffer,
     author: info.id,
   })
     res.json(postDoc);
@@ -168,12 +170,12 @@ app.get('/post/:id', async(req,res) => {
   res.json(postDoc);
 })
 
-app.post('/addPet', uploadMiddleware.single('file'), async (req, res) => {
-  const {originalname, path} = req.file;
-  const parts = originalname.split('.');
-  const ext = parts[parts.length - 1];
-  const newPath = path + '.' + ext;
-  fs.renameSync(path, newPath);
+app.post('/addPet', upload.single('file'), async (req, res) => {
+  // const {originalname, path} = req.file;
+  // const parts = originalname.split('.');
+  // const ext = parts[parts.length - 1];
+  // const newPath = path + '.' + ext;
+  // fs.renameSync(path, newPath);
 
   const token = req.headers['token'];
   jwt.verify(token, secret, {}, async(err,info)=>{
@@ -189,7 +191,7 @@ app.post('/addPet', uploadMiddleware.single('file'), async (req, res) => {
       age,
       aboutPet,
       reasonForAdoption,
-      img: newPath,
+      img: req.file.buffer,
       email,
       contactName,
       location,

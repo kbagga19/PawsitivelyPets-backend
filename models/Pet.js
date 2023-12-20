@@ -11,7 +11,7 @@ const PetSchema = new Schema({
     age: String, 
     aboutPet: String,
     reasonForAdoption: String,
-    img: String,
+    img: Buffer,
     location: String,
     email: String,
     contactName: String
