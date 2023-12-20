@@ -209,6 +209,7 @@ app.get('/pets', async (req, res) => {
 app.get('/pets/:id', async (req, res) => {
   const {id} = req.params;
   const petDoc = await Pet.findById(id);
+  petDoc.img = petDoc.img.data.toString('base64')
   res.json(petDoc);
 })
 
