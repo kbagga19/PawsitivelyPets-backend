@@ -67,15 +67,19 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
   const {email, password} = req.body;
   const userDoc = await User.findOne({email});
-  const name = userDoc.name;
-  const passOk = bcrypt.compareSync(password, userDoc.password);
-  if (passOk) {
-    const token = jwt.sign({name, email, id:userDoc._id}, secret, (err, token) => {
-      if (err) throw err;
-      res.json({status: "ok", data: token});
-    })
+  if (userDoc) {
+    const name = userDoc.name;
+    const passOk = bcrypt.compareSync(password, userDoc.password);
+    if (passOk) {
+      const token = jwt.sign({name, email, id:userDoc._id}, secret, (err, token) => {
+        if (err) throw err;
+        res.json({status: "ok", data: token});
+      })
+    } else {
+      res.status(400).json("Wrong Credentials!");
+    }
   } else {
-    res.status(400).json("Wrong Credentials!");
+    res.status(400).json("User not found!")
   }
 });
 
