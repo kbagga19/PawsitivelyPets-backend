@@ -5,7 +5,7 @@ const PostSchema = new Schema({
     title: String,
     summary: String,
     content: String, 
-    cover: String,
+    cover: Buffer,
     author: {type:Schema.Types.ObjectId, ref:'User'},
 },{
     timestamps: true,
